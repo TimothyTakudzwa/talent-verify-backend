@@ -1,16 +1,17 @@
 from django.db import models
 
-# Create your models here.
+from company.crypto import EncryptedCharField
+
 class Company(models.Model):
     """
     Model for employers who will upload their employees
     """
 
     name = models.CharField(max_length=100)
-    registration_number = models.CharField(max_length=100)
+    registration_number = EncryptedCharField(max_length=100)
     date_of_registration = models.DateField()
     address = models.CharField(max_length=100)
-    contact_person = models.CharField(max_length=100)
+    contact_person = EncryptedCharField(max_length=100)
     contact_phone = models.CharField(max_length=100)
     number_of_employees = models.IntegerField()
     email = models.EmailField()
@@ -45,7 +46,7 @@ class Employee(models.Model):
     name = models.CharField(max_length=100)
     department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='employees')
     role = models.CharField(max_length=100)
-    id_number = models.CharField(max_length=100)
+    id_number = EncryptedCharField(max_length=100)
     date_started = models.DateField()
     date_ended = models.DateField()
 
