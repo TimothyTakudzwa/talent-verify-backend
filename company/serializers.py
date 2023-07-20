@@ -35,6 +35,8 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
         # Create the Employee instance with the updated validated data
         employee = Employee.objects.create(**validated_data)
+
+        # TODO: Handle roles implementation
         return employee
 
 

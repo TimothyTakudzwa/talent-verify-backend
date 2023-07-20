@@ -46,7 +46,7 @@ class Employee(models.Model):
     name = models.CharField(max_length=100)
     department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='employees')
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='employees')
-    role = models.CharField(max_length=100)
+    # current_role = models.ForeignKey('EmployeeRoles', on_delete=models.CASCADE)
     id_number = EncryptedCharField(max_length=100)
     date_started = models.DateField()
     date_ended = models.DateField()
