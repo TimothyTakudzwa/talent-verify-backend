@@ -5,6 +5,7 @@ from drf_yasg import openapi
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from company.views import CompanyViewSet, DepartmentViewSet, EmployeeRolesViewSet, EmployeeViewSet
+from user.views import UserViewSet
 
 # Create a router and register the viewsets
 router = routers.DefaultRouter()
@@ -12,6 +13,7 @@ router.register('company', CompanyViewSet)
 router.register('employee', EmployeeViewSet)
 router.register('department', DepartmentViewSet)
 router.register('employeeRoles', EmployeeRolesViewSet)
+router.register('user', UserViewSet)
 
 
 # Swagger/OpenAPI schema view

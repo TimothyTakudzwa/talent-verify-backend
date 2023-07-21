@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from company.models import Company, Department, Employee, EmployeeRoles
+from user.models import User
 
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
@@ -48,3 +49,5 @@ class EmployeeRolesSerializer(serializers.ModelSerializer):
     def validate(self, attrs):        
         
         return super().validate(attrs)
+    
+
