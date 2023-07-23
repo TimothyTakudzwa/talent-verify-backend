@@ -13,6 +13,14 @@ class DepartmentSerializer(serializers.ModelSerializer):
         model = Department
         fields = '__all__'
 
+    def validate(self, attrs):
+        company = attrs.get('company')
+        name = attrs.get('name').title()
+        department = Department.objects.filter(name=name, company=company).first()
+        if department:
+            raise serializers.ValidationError("Department already exists")
+        return super().validate(attrs)
+
 class EmployeeSerializer(serializers.ModelSerializer):
     department = DepartmentSerializer(required=False)
     id_number = serializers.CharField()

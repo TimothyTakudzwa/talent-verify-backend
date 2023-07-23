@@ -10,8 +10,8 @@ from user.views import UserViewSet
 # Create a router and register the viewsets
 router = routers.DefaultRouter()
 router.register('company', CompanyViewSet)
-router.register('employee', EmployeeViewSet)
-router.register('department', DepartmentViewSet)
+router.register('employees', EmployeeViewSet)
+router.register('departments', DepartmentViewSet)
 router.register('employeeRoles', EmployeeRolesViewSet)
 router.register('user', UserViewSet)
 
