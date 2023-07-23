@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from company.models import Company, Department, Employee, EmployeeRoles
 from user.models import User
+from company.crypto import EncryptedCharField
 
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,15 +15,17 @@ class DepartmentSerializer(serializers.ModelSerializer):
 
 class EmployeeSerializer(serializers.ModelSerializer):
     department = DepartmentSerializer(required=False)
-
+    id_number = serializers.CharField()
+    role = serializers.CharField(required=False)
     class Meta:
         model = Employee
-        fields = '__all__'
+        fields = ['id', 'name', 'department', 'company', 'id_number', 'date_started', 'date_ended', 'role']
 
     def create(self, validated_data):
         department_data = validated_data.pop('department', None)
         department_name = None
-
+        role = validated_data.pop('role', None)
+        print(validated_data)
         if department_data:
             department_name = department_data.get('name').title()
             department = Department.objects.filter(name=department_name).first()
@@ -36,9 +39,24 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
         # Create the Employee instance with the updated validated data
         employee = Employee.objects.create(**validated_data)
+        role = EmployeeRoles.objects.create(employee=employee, name=role, current=True, date_started=validated_data.get('date_started'), date_ended=validated_data.get('date_ended'))
 
+        
         # TODO: Handle roles implementation
         return employee
+    
+    def to_representation(self, instance):
+        rep = super(EmployeeSerializer, self).to_representation(instance)
+        rep['company'] = instance.company.name
+        rep['department'] = instance.department.name
+        # g
+        # print(instance.roles.all())
+        try:
+            rep['role'] = instance.roles.filter(current=True).first().name
+        except:
+            rep['role'] = "No Current Role Updated"
+        return rep
+
 
 
 class EmployeeRolesSerializer(serializers.ModelSerializer):

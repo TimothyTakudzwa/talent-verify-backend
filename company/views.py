@@ -21,6 +21,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     serializer_class = EmployeeSerializer
     permission_classes = (IsAuthenticated, isOwnerOrSuperUser)
 
+    
 class DepartmentViewSet(viewsets.ModelViewSet):
     queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
@@ -30,6 +31,8 @@ class EmployeeRolesViewSet(viewsets.ModelViewSet, isOwnerOrSuperUser):
     queryset = EmployeeRoles.objects.all()
     serializer_class = EmployeeRolesSerializer
     permission_classes = (IsAuthenticated,)
+
+    
 
 
 

@@ -3,7 +3,7 @@ from cryptography.fernet import Fernet
 import os 
 
 # Generate a secret key for encryption (you should keep this key secure and not hardcode it)
-SECRET_KEY = Fernet.generate_key()
+SECRET_KEY = b'AM75EJBSGIp1KV5EOfd9tK-oNlEJsTnykUpmrDKxpnw='
 cipher_suite = Fernet(SECRET_KEY)
 
 class EncryptedCharField(models.CharField):
@@ -16,6 +16,7 @@ class EncryptedCharField(models.CharField):
 
     def to_python(self, value):
         try:
+            print("getting in here")
             decrypted_value = cipher_suite.decrypt(value.encode()).decode()
         except:
             decrypted_value = value
