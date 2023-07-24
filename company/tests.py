@@ -60,7 +60,7 @@ class TestCompanyViewSet:
         assert response.status_code == status.HTTP_200_OK
         assert response.data == CompanySerializer(company).data
 
-    # Add other CompanyViewSet test cases as needed
+    
 
 
 @pytest.mark.django_db

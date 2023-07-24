@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 from company.crypto import EncryptedCharField
 
@@ -49,7 +50,7 @@ class Employee(models.Model):
     # current_role = models.ForeignKey('EmployeeRoles', on_delete=models.CASCADE)
     id_number = EncryptedCharField(max_length=100)
     date_started = models.DateField()
-    date_ended = models.DateField()
+    date_ended = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -63,10 +64,12 @@ class EmployeeRoles(models.Model):
     """
 
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='roles')
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='roles')
     name = models.CharField(max_length=100)
     date_started = models.DateField()
-    date_ended = models.DateField()
+    date_ended = models.DateField(null=True, blank=True)
     current = models.BooleanField(default=False)
+    
 
     def __str__(self):
         return self.name
@@ -80,10 +83,10 @@ class RoleDuties(models.Model):
     """
 
     role = models.ForeignKey(EmployeeRoles, on_delete=models.CASCADE, related_name='duties')
-    duty = models.CharField(max_length=500)
+    duties = models.CharField(max_length=500)
 
     def __str__(self):
-        return self.duty
+        return self.duties
     
     class Meta:
         verbose_name_plural = 'Role Duties'

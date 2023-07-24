@@ -21,11 +21,17 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     serializer_class = EmployeeSerializer
     permission_classes = (IsAuthenticated, isOwnerOrSuperUser)
 
+    def get_queryset(self):
+        return super().get_queryset().filter(company=self.request.user.company)
+
     
 class DepartmentViewSet(viewsets.ModelViewSet):
     queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
     permission_classes = (IsAuthenticated,isOwnerOrSuperUser)
+
+    def get_queryset(self):
+        return super().get_queryset().filter(company=self.request.user.company)
 
 class EmployeeRolesViewSet(viewsets.ModelViewSet, isOwnerOrSuperUser):
     queryset = EmployeeRoles.objects.all()
