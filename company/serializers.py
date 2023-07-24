@@ -65,6 +65,16 @@ class EmployeeSerializer(serializers.ModelSerializer):
         # TODO: Handle roles implementation
         return employee
     
+    def update(self, instance, validated_data):
+        print(validated_data)
+        role = instance.roles.filter(current=True).first()
+        role.name = validated_data.get('role')
+        role.save()
+        duties = role.duties.first()
+        duties.duties = validated_data.get('duties')
+        duties.save()
+        return super().update(instance, validated_data)
+    
     # def update(self, instance, validated_data):
         
     
